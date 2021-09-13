@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>转载 on CF 的个人博客</title>
+    <title>转载 on </title>
     <link>/categories/%E8%BD%AC%E8%BD%BD/</link>
-    <description>Recent content in 转载 on CF 的个人博客</description>
+    <description>Recent content in 转载 on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 28 Sep 2014 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/%E8%BD%AC%E8%BD%BD/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Sat, 02 Feb 2019 00:00:00 +0000</lastBuildDate><atom:link href="/categories/%E8%BD%AC%E8%BD%BD/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Markdown中的数学公式</title>
+      <link>/post/2019/markdown-math/</link>
+      <pubDate>Sat, 02 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/markdown-math/</guid>
+      <description>markdown中公式编辑教程
+Markdown数学公式语法</description>
+    </item>
     
     <item>
       <title>Creating a New Theme</title>
-      <link>/post/creating-a-new-theme/</link>
+      <link>/post/2014/creating-a-new-theme/</link>
       <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
       
-      <guid>/post/creating-a-new-theme/</guid>
+      <guid>/post/2014/creating-a-new-theme/</guid>
       <description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
 We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
     </item>
     
     <item>
       <title>(Hu)go Template Primer</title>
-      <link>/post/goisforlovers/</link>
+      <link>/post/2014/goisforlovers/</link>
       <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
       
-      <guid>/post/goisforlovers/</guid>
+      <guid>/post/2014/goisforlovers/</guid>
       <description>&lt;p&gt;Hugo uses the excellent &lt;a href=&#34;https://golang.org/&#34;&gt;Go&lt;/a&gt; &lt;a href=&#34;https://golang.org/pkg/html/template/&#34;&gt;html/template&lt;/a&gt; library for
 its template engine. It is an extremely lightweight engine that provides a very
 small amount of logic. In our experience that it is just the right amount of

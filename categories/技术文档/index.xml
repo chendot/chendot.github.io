@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>技术文档 on </title>
+    <link>/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/</link>
+    <description>Recent content in 技术文档 on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 23 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>前端技术栈！</title>
+      <link>/post/2020/0623-frontend/</link>
+      <pubDate>Tue, 23 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/0623-frontend/</guid>
+      <description>&lt;p&gt;抄作业，一图解千愁&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>MacOS 调优</title>
+      <link>/post/2020/0615-macos-cli/</link>
+      <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/0615-macos-cli/</guid>
+      <description>pmset mac 休眠模式种类：
+ mode 0：当前状态保存在内存中，系统继续供电，唤醒速度快 mode 1：保留到专用磁盘空间，唤醒时需重新加载 mode 3：默认模式，将当前状态保存在内存中，当电快耗尽时将当前状态保存到磁盘中，然后完全关机。 mode 25：与mode 3的区别在于会直接停止内存供电而不等到低电量  模式查看及设置：
+pmset -g System-wide power settings: Currently in use: standbydelaylow 10800 # 盒盖后在内存保留秒数 standby 1 # 只有hibernatemode为3，25才工作 halfdim 1 hibernatefile /var/vm/sleepimage proximitywake 0 gpuswitch 2 powernap 0 disksleep 10 # disk进入休眠时间 standbydelayhigh 86400 sleep 1 # 闲置进入休眠时间，单位分钟；sleep &amp;gt;= disksleep &amp;gt;= display sleep hibernatemode 25 ttyskeepawake 1 displaysleep 2 # 显示器进入休眠时间 tcpkeepalive 1 # 网络唤醒功能 highstandbythreshold 50 acwake 0 lidwake 1 # 修改状态，需输入密码 sudo pmset -b hibernatemode 25 sudo pmset -a hibernatemode 3 sudo pmset -c hibernatemode 0 sudo pmset -b tcpkeepalive 0 # 参数含义 # -c 调节设定用于连接充电器的时候 # -b 调节设定用于使用电池（Battery）的时候 # -u 调节设定用于使用 UPS 的时候 # -a 调节设定用于全部情景 其它常规 关闭iCloud同步、日常关闭蓝牙、降低特效等</description>
+    </item>
+    
+    <item>
+      <title>MacOS 文件目录</title>
+      <link>/post/2020/0614-mac-dir/</link>
+      <pubDate>Sun, 14 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/0614-mac-dir/</guid>
+      <description>&lt;p&gt;打开Macintosh HD你会发现内中有四个文件夹(一般情况下，隐藏文件夹是不可见的，而且，可能会更多，比如安装xcode后会有developer文件夹).&lt;/p&gt;
+&lt;p&gt;分别有——应用程序(Applications)、系统(System)、用户(User)、资料库(Library)。四个文件夹中又分别各有若干数量的文件夹存在。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Open Graph Protocol</title>
+      <link>/post/2020/0526-the-open-graph-protocol/</link>
+      <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/0526-the-open-graph-protocol/</guid>
+      <description>&lt;p&gt;开放内容协议是 Facebook 在 2010 年 F8 开发者大会公布的一种网页元信息（Meta Information）标记协议，属于 Meta Tag （Meta 标签）的范畴，是一种为社交分享而生的 Meta 标签。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Bootstrap,TypeScript,React,Vue...chaos！</title>
+      <link>/post/2020/0125-bootstrap/</link>
+      <pubDate>Sat, 25 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/0125-bootstrap/</guid>
+      <description>&lt;p&gt;Bootstrap：Twitter开源前端框架。号称多终端一把梭，移动设备优先。所谓响应式设计，在任何尺寸的屏幕上看起来都会不错。&lt;br&gt;
+TypeScript：微软爸爸滴超级js，哦～不对，是js的超集
+Font Awesome &amp;hellip;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Git LFS</title>
+      <link>/post/2019/git_lfs/</link>
+      <pubDate>Sun, 22 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/git_lfs/</guid>
+      <description>本地安装LFS扩展 yum install git-lfs  注意：安装Git LFS的Git版本不低于1.8.2，高版本的git自带lfs不用额外安装
+ 针对某个项目进行git lfs install
+# 在某个Git仓库下 $ git lfs install Updated pre-push hook. Git LFS initialized. 这个命令会安装pre-push的git hook，即在push之前会调用一些hook执行推送large file的操作。
+指定LFS文件 # track后缀为doc、docx的文件 git lfs track &amp;#34;*.doc&amp;#34; git lfs track &amp;#34;*.docx&amp;#34; 执行后仓库中会生成一个.gitattribute文件，git的勾子就是根据这个文件来判断当前仓库是否有使用LFS管理。
+完成后和往常一样提交文件即可：
+# 将large File添加到项目中 git add . # 将文件的metadata写入 git commit -m &amp;#34;Add gemfield docx file&amp;#34; # 将git repo和large file同步到gitlab server上 git push origin master remote最新的LFS git lfs fetch origin master 文件加锁 因为git lfs管理的是二进制文件，并不擅长解决merge之类的问题，因此它有一个特殊的概念：文件加锁（gitlab 10.</description>
+    </item>
+    
+    <item>
+      <title>Traivs</title>
+      <link>/post/2019/traivs/</link>
+      <pubDate>Fri, 06 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/traivs/</guid>
+      <description>Anyway, Travis is one of the favorite bands I love. I like the song Walking in the sun.
+Travis CI 的钩子与生命周期 Travis的钩子 Travis 有不同的阶段,他提供了7个钩子。
+ before_install：install 阶段之前执行 before_script：script 阶段之前执行 after_failure：script 阶段失败时执行 after_success：script 阶段成功时执行 before_deploy：deploy 步骤之前执行 after_deploy：deploy 步骤之后执行 after_script：script 阶段之后执行  生命周期  before_install install before_script script aftersuccess or afterfailure [OPTIONAL] before_deploy [OPTIONAL] deploy [OPTIONAL] after_deploy after_script  </description>
+    </item>
+    
+    <item>
+      <title>GitLab CI/CD</title>
+      <link>/post/2019/gitlab-ci-cd/</link>
+      <pubDate>Wed, 06 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/gitlab-ci-cd/</guid>
+      <description>本地开发（developing）&amp;ndash;》静态代码走查（linting）&amp;ndash;》单元测试（testing）&amp;ndash;》合并到主干（merging）&amp;ndash;》自动构建（building）&amp;ndash;》自动发布（publishing）
+相关概念  管道（pipeline）
+每个推送到 GitLab 的提交都会产生一个与该提交关联的管道，若一次推送包含了多个提交，则管道与最后那个提交相关联，管道就是一个分成不同阶段(stage)的作业(job)的集合。 阶段（stage）
+阶段是对批量作业的一个逻辑划分，每个 GitLab CI/CD 必须包含至少一个 Stage。多个 Stage 按照顺序执行，其中任何一个 Stage 失败，后续的 Stage 均不会被执行，整个CI过程被认为失败。 作业（job）
+Job被定义为顶级元素，并且至少包括一条script语句，如果一个 Job 没有显式地关联某个 Stage，则会被默认关联到 test Stage。随着项目越来越大，Job 越来越多，Job 中包含的重复逻辑可能会让配置文件臃肿不堪。.gitlab-ci.yml 中提供了 before_script 和 after_script 两个全局配置项。这两个配置项在所有 Job 的 script 执行前和执行后调用。  GitLab Runner 用来执行.gitlab-ci.yml 脚本的工具。可以理解成，Runner就像认真工作的工人，GitLab-CI就是管理工人的中心，所有工人都要在GitLab-CI里面注册，并且表明自己是为哪个项目服务。当相应的项目发生变化时，GitLab-CI就会通知相应的工人执行对应的脚本。
+ Runner类型
+ Shared Runner：所有工程共用，由系统管理员创建。 Specific Runer：特定项目使用   安装
+V10 以后的版本的安装包为gitlab-runner
+老版本的为gitlab-ci-multi-runner
+rpm -ivh gitlab-runner-12.9.0-1.x86_64.rpm 注册Token
+安装好Runner后，需要向Gitlab注册，在Gitlab获取token。执行
+gitlab-runner register # 新版本命令 gitlab-ci-multi-runner register # 老版本命令 根据提示输入url和token，描述，tag，executor。
+注册完成后在 setting-&amp;gt;CI/CD 页面会新增一条runner记录。可以进入修改配置，包括注册时输入的tag，和是否触发untag的代码</description>
+    </item>
+    
+    <item>
+      <title>Git 常见问题</title>
+      <link>/post/2019/gitqa/</link>
+      <pubDate>Mon, 30 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/gitqa/</guid>
+      <description>Win7 本地速度慢 启用并行索引预加载：
+git config core.preloadindex true 禁用UAC和luafv驱动程序（需要重启），在regedit中将HKEY_LOCAL_MACHINE/SYSTEM/CurrentControlSet/Services/luafv的“start”键HKEY_LOCAL_MACHINE/SYSTEM/CurrentControlSet/Services/luafv为4以禁用驱动程序。 然后，将UAC置于其最低设置“永不通知”
+.gitignore无效 如果某个文件已经存在于远程仓库了，也就是说某个文件已经被版本控制了，如果将该文件添加到.gitignore中，是无法生效的。因为.gitignore是用来控制尚未被纳入版本控制的文件，如果文件已经存在于远程库中，自然也就无法生效了。
+方法一 直接在远程库里将想要忽略的文件删除掉，再将该文件写入.gitignore中即可。
+这种做法的前提是，你确定该文件是允许从远程库删除掉的，然而有些时候，这种做法是不可能的。要么没权限去远程库删掉该文件，要么该文件是必须的。
+方法二 使用命令git rm --cached filename1，然后将该文件写入.gitignore中即可。
+该命令表示从git仓库中将文件移除，不再进行版本控制，但保留工作区的该文件。
+需要注意的是，该命令其实和方法一差不多。git rm表示移除某个文件，--cached表示从暂存区中移除，如果不加该参数就是直接从工作区移除了。
+git rm --cached filename并不会从物理上删除文件，只是从暂存区中将文件删除。由于该文件原本已经被版本控制了，使用了该命令后，虽然保留了工作区的该文件，但是却会在暂存区中生成一个删除了该文件的记录，如果此时进行commit，就会把版本库里的该文件给删掉了，如果push到远程库，也会被删掉。最终还是走的方法一的路子。
+远程仓库连接权限问题 403错误 方案一 windows系统下清理系统存储用户密码，运行
+rundll32.exe keymgr.dll,KRShowKeyMgr
+方案二 1.在代码的.git/config文件内[remote “origin”]的url的gitlab域名前添加gitlab注册时的“用户名:密码@”
+2.这个用户要在对应项目下的角色是Owner或Master才行，如果是Guest、Reporter、Developer，则如下操作后也是不行。
+方案三 改成ssh方式
+LFS: Authorization error 在 .git/config 中增加
+[lfs &amp;quot;https://git.lug.ustc.edu.cn/chendot/libbar.git/info/lfs&amp;quot;] locksverify = true access = basic Pull 冲突处理 git pull 远端到本地冲突时，大部分IDE git插件会自动完成冲突比较。
+如未生成自动比较结果也可参考如下处理： stash（将本地代码隐藏保存）-&amp;gt; 重新 pull -&amp;gt; stash pop -&amp;gt; 冲突修改
+无法识别LFS管理文件 低版本git直接clone后可能出现无法识别LFS管理文件，可尝试如下方法解决：
+# 在本地仓库目录下调用git命令  git lfs uninstall git reset --hard git lfs install git lfs pull 如果执行git reset &amp;ndash;hard 回退版本的时候出现问题，可参考以下方法：</description>
+    </item>
+    
+    <item>
+      <title>分支管理</title>
+      <link>/post/2019/branch/</link>
+      <pubDate>Thu, 15 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/branch/</guid>
+      <description>建议规范 Git flow Git flow是一个定义良好的标准，但其复杂性引入了两个问题。
+一是开发人员必须使用开发分支而不是主干分支，主干分支是为要发布到生产的代码保留的。将master设置为您默认分支的名称是一种惯例，绝大多数的其他分支来源于此，并最终合并于此。由于大多数工具会自动使用master分支作为默认分支，因此老是切换到另一个分支是很烦人的。 二是补丁和发布分支引入的复杂性。这些分支对于某些组织来说可能是一个好主意，但对绝大多数组织来说都是过度的。如今大多数组织都在实施持续交付，这意味着我们可以部署默认分支。这样就可以避免使用补丁和发布分支，包括他们引入的所有流程。
+&#34; title=&#34;git flow&#34;
+GitHub flow 此工作流仅具有特性分支和主干分支。非常简单和干净，许多组织已经采用它并取得了巨大的成功。 Atlassian建议采用类似的策略，尽管他们会修改功能分支。将所有内容合并到主干分支和部署通常意味着您最大限度地减少“库存”中的代码量，这与精益和持续交付最佳实践一致。但是这个流程仍然存在很多关于部署、环境、发布和issue集成的问题。
+GitLab flow 带生产分支 GitHub Flow 确实假设您每次合并功能分支时都可以部署到生产环境。这对于SaaS应用程序是可行的，但在许多情况下这是不可能的。一种情况是您无法控制确切的发布时刻，例如需要通过AppStore验证的iOS应用程序。另一个例子是当你有部署窗口时（工作日从上午10点到下午4点，当运营团队满负荷运转时），你也可以在其他时间合并代码。在这些情况下，您可以创建一个反映已部署代码的生产分支。您可以通过将master合并到生产分支来部署新版本。如果您需要知道生产中的代码，您可以检出生产分支以查看。在版本控制系统中，合并提交很容易看到部署的大致时间。如果您自动部署生产分支，则此时间非常准确。如果您需要更准确的时间，则可以让部署脚本在每个部署上创建标记。此流程可避免git flow中常见的释放，标记和合并开销。
+带环境分支 拥有一个自动更新到主干分支的环境可能是个好主意。仅在这种情况下，此环境的名称可能与分支名称不同。假设您有一个临时环境，一个预生产环境和一个生产环境。在这种情况下，主干分支部署在临时环境上。当有人想要部署到预生产时，他们会创建从主干分支到预生产分支的合并请求。而将预生产分支合并到生产分支则会触发代码的上线。这种变更提交（commits）只向下游流动的工作流可确保所有变更在所有环境中都经过测试。如果您需要cherry-pick一个包含修补程序的提交，通常做法是在功能分支上开发它并使用合并请求将其合并到master中，不要删除该功能分支。如果主干分支自动测试通过（如果你正在实行持续交付，那么它就应如此），之后你就可以把它合并到其他分支。在某些情况下，可能需要执行更多的手工测试（这导致无法执行上述的主干-&amp;gt;预生产-&amp;gt;生产合并的标准流程），那么您可以从特性分支发送合并请求到下游分支。环境分支的“极端”版本正在为Teatro创建每个功能分支的环境。
+带发布分支 只有在您需要向外界发布软件时，才需要使用发布分支。在这种情况下，每个分支包含次要版本（2-3-stable，2-4-stable等）。 stable分支使用master作为起点，并尽可能晚地创建。通过尽可能晚地创建分支，您可以最大限度地减少将bug fixes应用于多个分支所花费的时间。在一个发布分支被公布后，仅有严重错误的修复能被包括在该分支中。如果可能的话，这些bug fixes应首先合并到master中，然后cherry-pick到发布分支中。这样你就不会忘记将它们cherry-pick到master中，以避免在后续版本中遇到相同的bug。这被称为“上游优先”策略，也是谷歌和红帽实施的策略。每次在发布分支中包含错误修复时，都会通过设置新标记来增加补丁的版本号（以符合语义版本控制）。有些项目还有一个稳定的分支，指向与最新发布的分支相同的提交。在此流程中，拥有生产分支（或git flow 的master分支）并不常见。
+实践方案 常设三个分支：
+ dev：开发分支，开发人员日常使用，push和merge不受限制。 master：测试环境的稳定分支，用于构建测试环境。push仅限于bug修改，merge需要审核。 prod：生产稳定分支，用于同步生产版本。除了从master分支进行merge，不接受任何其它修改。  平时开发工作中，根据需要由开发人员创建两类临时分支：
+ feature-*：为了开发某个特定功能，从develop分支上面分出来的。开发完成后，要merge到develop分支。功能分支的命名，采用feature-*形式命名(*为任务单号) fixbug-*：Bug修复分支，为了修复某个bug，从常设分支上面分出来的，一般从生产稳定分支分出来。修复完成后，再merge到其他的分支。采用fixbug-*的形式命名（*为bug单号）  </description>
+    </item>
+    
+    <item>
+      <title>代码提交</title>
+      <link>/post/2019/git_commit/</link>
+      <pubDate>Sat, 10 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/git_commit/</guid>
+      <description>.gitignore 配置 设置忽略规则，来过滤特定文件的提交。
+常见场景：在使用git add .的时候，遇到把你不想提交的文件也添加到了缓存中的情况，如项目本地配置，push到远端仓库会造成其他人pull冲突；又或者将大量依赖的jar包等不需要做版本控制的文件push到远端，增加仓库存储负担。
+为避免提交时误操作或手动过滤上述文件的麻烦，可通过在.gitignore文件中申明不希望添加到git中去的文件，这样当使用git add .的时候这些文件就会被自动忽略掉。
+忽略文件原则   忽略操作系统自动生成的文件，比如缩略图等 忽略编译生成的中间文件、可执行文件等，比如Java编译产生的.class文件 忽略你自己的带有敏感信息的配置文件，比如存放口令的配置文件 忽略日志文件   忽略规则说明 # 表示此为注释,将被Git忽略 *.a 表示忽略所有 .a 结尾的文件 !lib.a 表示但lib.a除外 /TODO表示仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO build/ 表示忽略 build/目录下的所有文件，过滤整个build文件夹； doc/*.txt 表示会忽略doc/notes.txt但不包括 doc/server/arch.txt bin/: 表示忽略当前路径下的bin文件夹，该文件夹下的所有内容都会被忽略，不忽略 bin 文件 /bin: 表示忽略根目录下的bin文件 /*.c: 表示忽略cat.c，不忽略 build/cat.c debug/*.obj: 表示忽略debug/io.obj，不忽略 debug/common/io.obj和tools/debug/io.obj **/foo: 表示忽略/foo,a/foo,a/b/foo等 a/**/b: 表示忽略a/b, a/x/b,a/x/y/b等 !/bin/run.sh 表示不忽略bin目录下的run.sh文件 *.log: 表示忽略所有 .log 文件 config.php: 表示忽略当前路径的 config.php 文件 /mtk/表示过滤整个文件夹 *.zip 表示过滤所有.zip文件 /mtk/do.c 表示过滤某个具体文件 被过滤掉的文件就不会出现在git仓库中（gitlab或github）了，当然本地库中还有，只是push的时候不会上传。 需要注意的是，gitignore还可以指定要将哪些文件添加到版本管理中，如下： !</description>
+    </item>
+    
+    <item>
+      <title>静态网站框架</title>
+      <link>/post/2019/0422-ssgs/</link>
+      <pubDate>Mon, 22 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/0422-ssgs/</guid>
+      <description>Hugo 目录结构 ▸ archetypes/ # 包括内容类型，在创建新内容时自动生成内容的配置 ▸ content/ # 包括网站内容，全部使用markdown格式 ▸ data/ ▸ layouts/ # 包括了网站的模版，决定内容如何呈现 ▸ static/ # 包括了css, js, fonts, media等，决定网站的外观 ▸ themes/ config.toml ▸ resources # Caches some files to speed up generation. 文章：以markdown格式的文件存放在content目录下面
+└── content ├── _index.md // [home] &amp;lt;- https://example.com/ ** ├── about.md // [page] &amp;lt;- https://example.com/about/ ├── posts | ├── _index.md // [section] &amp;lt;- https://example.com/posts/ ** | ├── firstpost.md // [page] &amp;lt;- https://example.com/posts/firstpost/ | ├── happy | | ├── _index.</description>
+    </item>
+    
+    <item>
+      <title>我讨厌皮亚诺空间和科赫曲线</title>
+      <link>/post/2019/code-nature/</link>
+      <pubDate>Fri, 22 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/code-nature/</guid>
+      <description>&lt;p&gt;瞄了一眼《代码本色·用编程模拟自然系统》豆瓣书评区，似乎看得人并不多，部分评价低的我觉得要么是其水平太高，要么是没认真看完。写差评的好处就是让自己的水平看起来显得高。我庸俗，我肤浅，我向广大热爱编程、热爱理工科的初高中同学强烈推荐此书。作为一个不会写代码的准IT工作者，这是我看过的编程类书籍中最好的一部（掐指一算，除去学生时教科书，似乎看过的编程类书籍不会超过5本）。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

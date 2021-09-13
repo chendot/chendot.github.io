@@ -1,27 +1,66 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>IT on CF 的个人博客</title>
+    <title>IT on </title>
     <link>/categories/it/</link>
-    <description>Recent content in IT on CF 的个人博客</description>
+    <description>Recent content in IT on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 02 Apr 2014 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/it/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Sat, 20 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/it/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CSS七宗罪</title>
+      <link>/post/2020/0620-html/</link>
+      <pubDate>Sat, 20 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/0620-html/</guid>
+      <description>深入了解选择符优先级、继承和层叠机制。知道盒子模型各组成部分。对各种长度单位了如指掌。
+了解CSS3最新特性并亲手尝试。 知道SVG 能读懂JavaScript 了解CSS预处理器
+盒子模型  margin：外边距，用于盒子的定位，是透明的，可以显示父元素（包裹着这个盒子元素的元素）的背景 border：边缘，属性包括粗细、样式（直线、虚线、点状线等）、颜色 padding：内边距，用于调整内容在盒子中的位置，是透明的。受盒子的背景影响 content：元素内容  html将元素分为三类：
+ inline内联元素（行级元素）：不可以设置宽高，可以与其它元素同占一行（a，span） block块元素：可以设置宽高，独占一行（div、ul,li,h*,p)，注意div元素之间是没有行间隙的 内联块元素：可以设置宽高，可以与其他元素同占一行（img）  css属性text-align可以设置文本位置
+ 给块元素设置text-align:center，块元素内的文本和行内元素都居中 给块元素设置width，并设置margin:0 auto; 块元素自身居中  position的属性值 static：静态定位，默认值。没有定位元素出现在正常流中，忽略top，bottom，left，right或者z-index声明
+relative：相对定位，相对于它原本的位置来定位，宽度与父元素宽度保持一致。不会影响周围元素的位置。
+absolute：
+ 定位前提：父类存在定位元素则以该父类元素位置进行定位 一般采用“子绝（对）父相（对）“ 宽度由文本决定，会影响周围元素的位置  fixed：相对浏览器窗口进行定位
+inherit：继承父元素值
+Absolution：元素会脱离文档流，定位是相对于离它最近的且不是static定位的父元素而言，若该元素没有设置宽度，则宽度由元素里面的内容决定，且宽度不会影响父元素，定位为absolution后，原来的位置相当于是空的，下面的的元素会来占据。
+Relative：元素仍处于文档流中，定位是相对于原本自身的位置，若没有设置宽度，则宽度为父元素的宽度，该元素的大小会影响父元素的大小。
+关于几个属性值区别的例子：Absolute（绝对定位）与relative（相对定位）的图文讲解 CSS Id 和 Class
+id 选择器可以为标有特定 id 的 HTML 元素指定特定的样式。
+HTML元素以id属性来设置id选择器,CSS 中 id 选择器以 &amp;ldquo;#&amp;rdquo; 来定义。
+以下的样式规则应用于元素属性 id=&amp;ldquo;para1&amp;rdquo;:
+class 属性大多数时候用于指向样式表中的类（class）。不过，也可以利用它通过 JavaScript 来改变带有指定 class 的 HTML 元素。
+即指定多个class，这是bootstrap常干的事，比如 请问，这两个class之间的关系是什么，二者的优先级是怎样的？
+我自己定义了一个class ，加在后面，但没起作用，当然，如果写到style里去是可以的。
+你说的没错，就是指定多个class的意思，在HTML的层面上说的话，这样指定的class是同级的。同级的class需要看CSS文件的先后次序，后加载的css会覆盖前面加载的css。写到style的话因为是最后解析的所以是最高的一个优先级。</description>
+    </item>
     
     <item>
-      <title>(Hu)go Template Primer</title>
-      <link>/post/goisforlovers/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      <title>Mark for SpringCloud</title>
+      <link>/post/2020/0520-micro-service/</link>
+      <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/goisforlovers/</guid>
-      <description>&lt;p&gt;Hugo uses the excellent &lt;a href=&#34;https://golang.org/&#34;&gt;Go&lt;/a&gt; &lt;a href=&#34;https://golang.org/pkg/html/template/&#34;&gt;html/template&lt;/a&gt; library for
-its template engine. It is an extremely lightweight engine that provides a very
-small amount of logic. In our experience that it is just the right amount of
-logic to be able to create a good static website. If you have used other
-template systems from different languages or frameworks you will find a lot of
-similarities in Go templates.&lt;/p&gt;</description>
+      <guid>/post/2020/0520-micro-service/</guid>
+      <description>一年来除了例行机械地忙碌于常规的、繁琐的日常事务性工作外，欣慰的是做了些许DevOps的改进。接下来得再玩点新花式，对现有管理的几个系统架构上做些许改进。逐步调整为微服务架构。
+优点  服务独立，耦合性低 单个服务依赖少，启动快速 更加适合敏捷开发，针对单个服务发布版本快速 职责更加明确，服务拆分利于团队之间分工 服务可以动态按需扩容 代码复用，每个服务提供REST API，所有基础服务必须抽离  劣势  调用复杂性高，各模块通过Http来通信，这当中会产生诸如网络、容错、调用等多种问题 独立的数据库，分布式事务 测试难度增加，涉及大量接口，自动化测试尤为重要 运维难度提升，部署、监控更为复杂  和生物的渐进式演化一样，系统重构最好是采用循序渐进的模式。做好重构规划，抽出业务服务，再抽出这个产品所依赖的基础服务。尽量将重要的，影响重大的模块放到后面。
+不要想着一步登天，在保障现有业务稳定运行情况下，稳步调整改进。
+Spring Cloud 主要模块  Eureka：服务注册中心，用于管理服务 Ribbon：基于客户端的负载均衡组件 Hystrix：容错框架，防止服务雪崩效应 Feign：Web服务客户端，简化Http接口调用 Zuul：API网关，控制路由转发、请求过滤 Config：分布式配置管理 Sleuth：服务跟踪 Stream：构建消息驱动的微服务应用框架 Bus：消息总线  </description>
+    </item>
+    
+    <item>
+      <title>Spring Never End</title>
+      <link>/post/2020/0222-springboot/</link>
+      <pubDate>Sat, 22 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/0222-springboot/</guid>
+      <description>Spring IoC(Inversion Of Control)  DI(Dependency Injection) 依赖注入，软件实体被动接受其依赖的其它组件被IoC容器注入 DL(Dependency Lookup) 软件实体主动去服务注册地查找其依赖的服务  Spring 框架最早是通过 XML 配置文件的形式来描述 bean 与 bean 之间的关系的，随着 Java 业界研发技术和理念的转变，基于 Java 代码和 Annotation 元信息的描述方式也日渐兴盛（比如 @Autowired 和 @Inject），但不管使用哪种方式，都只是为了简化绑定逻辑描述的各种“表象”，最终都是为本阶段的最终目的服务
+主要特性：
+ 非侵入式：基于Spring开发的应用中的对象可以不依赖于Spring的API 控制反转：IOC——Inversion of Control，指的是将对象的创建权交给Spring去创建。使用Spring之前，对象的创建都是由我们自己在代码中new创建。而使用Spring之后。对象的创建都是由给了Spring框架。 依赖注入：DI——Dependency Injection，是指依赖的对象不需要手动调用setXX方法去设置，而是通过配置赋值。 面向切面编程：Aspect Oriented Programming——AOP。通过预编译方式和运行期动态代理实现程序功能的统一维护。主要功能：日志记录，性能统计，安全控制，事物处理，异常处理等。 容器：Spring是一个容器，因为它包含并且管理应用对象的生命周期 组件化：Spring实现了使用简单的组件配置组合成一个复杂的应用。在 Spring 中可以使用XML和Java注解组合这些对象。 一站式：在IOC和AOP的基础上可以整合各种企业应用的开源框架和优秀的第三方类库（实际上Spring 自身也提供了表述层的SpringMVC和持久层的Spring JDBC）  核心思想：IOC和AOP
+Ioc控制反转，谁控制谁？控制什么？为什么要控制？ DI依赖注入，谁依赖谁？为什么要依赖？谁注入谁？为什么要注入？
+AOP，基于动态代理，如果要代理对象，实现了某个接口，那么Spring AOP会使用JDK Proxy创建代理。AOP在日志记录和事务处理方面应用较多。
+Spring MVC 前后端解偶 @RestController
+参考文章：
+Spring MVC过时了吗？
+Spring Boot 习惯优于配置
+spring4.X提倡使用java配置和注解配置组合，而Spring Boot不需要任何xml配置</description>
     </item>
     
   </channel>

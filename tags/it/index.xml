@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>IT on </title>
+    <link>/tags/it/</link>
+    <description>Recent content in IT on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 23 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/it/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>前端技术栈！</title>
+      <link>/post/2020/0623-frontend/</link>
+      <pubDate>Tue, 23 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/0623-frontend/</guid>
+      <description>&lt;p&gt;抄作业，一图解千愁&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>MacOS 调优</title>
+      <link>/post/2020/0615-macos-cli/</link>
+      <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/0615-macos-cli/</guid>
+      <description>pmset mac 休眠模式种类：
+ mode 0：当前状态保存在内存中，系统继续供电，唤醒速度快 mode 1：保留到专用磁盘空间，唤醒时需重新加载 mode 3：默认模式，将当前状态保存在内存中，当电快耗尽时将当前状态保存到磁盘中，然后完全关机。 mode 25：与mode 3的区别在于会直接停止内存供电而不等到低电量  模式查看及设置：
+pmset -g System-wide power settings: Currently in use: standbydelaylow 10800 # 盒盖后在内存保留秒数 standby 1 # 只有hibernatemode为3，25才工作 halfdim 1 hibernatefile /var/vm/sleepimage proximitywake 0 gpuswitch 2 powernap 0 disksleep 10 # disk进入休眠时间 standbydelayhigh 86400 sleep 1 # 闲置进入休眠时间，单位分钟；sleep &amp;gt;= disksleep &amp;gt;= display sleep hibernatemode 25 ttyskeepawake 1 displaysleep 2 # 显示器进入休眠时间 tcpkeepalive 1 # 网络唤醒功能 highstandbythreshold 50 acwake 0 lidwake 1 # 修改状态，需输入密码 sudo pmset -b hibernatemode 25 sudo pmset -a hibernatemode 3 sudo pmset -c hibernatemode 0 sudo pmset -b tcpkeepalive 0 # 参数含义 # -c 调节设定用于连接充电器的时候 # -b 调节设定用于使用电池（Battery）的时候 # -u 调节设定用于使用 UPS 的时候 # -a 调节设定用于全部情景 其它常规 关闭iCloud同步、日常关闭蓝牙、降低特效等</description>
+    </item>
+    
+    <item>
+      <title>MacOS 文件目录</title>
+      <link>/post/2020/0614-mac-dir/</link>
+      <pubDate>Sun, 14 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/0614-mac-dir/</guid>
+      <description>&lt;p&gt;打开Macintosh HD你会发现内中有四个文件夹(一般情况下，隐藏文件夹是不可见的，而且，可能会更多，比如安装xcode后会有developer文件夹).&lt;/p&gt;
+&lt;p&gt;分别有——应用程序(Applications)、系统(System)、用户(User)、资料库(Library)。四个文件夹中又分别各有若干数量的文件夹存在。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Open Graph Protocol</title>
+      <link>/post/2020/0526-the-open-graph-protocol/</link>
+      <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/0526-the-open-graph-protocol/</guid>
+      <description>&lt;p&gt;开放内容协议是 Facebook 在 2010 年 F8 开发者大会公布的一种网页元信息（Meta Information）标记协议，属于 Meta Tag （Meta 标签）的范畴，是一种为社交分享而生的 Meta 标签。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>评论系统</title>
+      <link>/post/2020/0402-comment-system/</link>
+      <pubDate>Thu, 02 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/0402-comment-system/</guid>
+      <description>Valine 诞生于2017年8月7日，是一款基于Leancloud的快速、简洁且高效的无后端评论系统。
+Disqus 貌似墙了</description>
+    </item>
+    
+    <item>
+      <title>Bootstrap,TypeScript,React,Vue...chaos！</title>
+      <link>/post/2020/0125-bootstrap/</link>
+      <pubDate>Sat, 25 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/0125-bootstrap/</guid>
+      <description>&lt;p&gt;Bootstrap：Twitter开源前端框架。号称多终端一把梭，移动设备优先。所谓响应式设计，在任何尺寸的屏幕上看起来都会不错。&lt;br&gt;
+TypeScript：微软爸爸滴超级js，哦～不对，是js的超集
+Font Awesome &amp;hellip;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Creating a New Theme</title>
+      <link>/post/2014/creating-a-new-theme/</link>
+      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014/creating-a-new-theme/</guid>
+      <description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
+We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
+    </item>
+    
+    <item>
+      <title>(Hu)go Template Primer</title>
+      <link>/post/2014/goisforlovers/</link>
+      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014/goisforlovers/</guid>
+      <description>&lt;p&gt;Hugo uses the excellent &lt;a href=&#34;https://golang.org/&#34;&gt;Go&lt;/a&gt; &lt;a href=&#34;https://golang.org/pkg/html/template/&#34;&gt;html/template&lt;/a&gt; library for
+its template engine. It is an extremely lightweight engine that provides a very
+small amount of logic. In our experience that it is just the right amount of
+logic to be able to create a good static website. If you have used other
+template systems from different languages or frameworks you will find a lot of
+similarities in Go templates.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

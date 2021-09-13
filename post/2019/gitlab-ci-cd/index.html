@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>GitLab CI/CD - </title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="GitLab内置持续集成工具 CI/CD，由配置文件 .gitlab-ci.yml 和 GitLab Runner 协调实现项目持续集成。">
+		<meta property="og:title" content="GitLab CI/CD" />
+<meta property="og:description" content="GitLab内置持续集成工具 CI/CD，由配置文件 .gitlab-ci.yml 和 GitLab Runner 协调实现项目持续集成。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2019/gitlab-ci-cd/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-11-06T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-11-06T00:00:00+00:00" />
+
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<header class="header">
+	<div class="container header__container">
+		
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/" title="Page(/post/2019/GitLab-CI-CD.md)" rel="home">
+				<span class="menu__text">时光荏苒</span>
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/contact/">
+				
+				<span class="menu__text">有缘相聚</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/my-paint/">
+				
+				<span class="menu__text">解忧涂鸦</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+	<div class="container container--outer">
+		
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">GitLab CI/CD</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-11-06T00:00:00Z">2019-11-06</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" rel="category">技术文档</a>
+	</span>
+</div></div>
+		</header><div class="content post__content clearfix">
+			<p>本地开发（developing）&ndash;》静态代码走查（linting）&ndash;》单元测试（testing）&ndash;》合并到主干（merging）&ndash;》自动构建（building）&ndash;》自动发布（publishing）</p>
+<p><img src="/img/cicd.png" alt="cicd"></p>
+<h2 id="相关概念">相关概念</h2>
+<ul>
+<li><strong>管道（pipeline）</strong><br>
+每个推送到 GitLab 的提交都会产生一个与该提交关联的管道，若一次推送包含了多个提交，则管道与最后那个提交相关联，管道就是一个分成不同阶段(stage)的作业(job)的集合。</li>
+<li><strong>阶段（stage）</strong><br>
+阶段是对批量作业的一个逻辑划分，每个 GitLab CI/CD 必须包含至少一个 Stage。多个 Stage 按照顺序执行，其中任何一个 Stage 失败，后续的 Stage 均不会被执行，整个CI过程被认为失败。</li>
+<li><strong>作业（job）</strong><br>
+Job被定义为顶级元素，并且至少包括一条script语句，如果一个 Job 没有显式地关联某个 Stage，则会被默认关联到 test Stage。随着项目越来越大，Job 越来越多，Job 中包含的重复逻辑可能会让配置文件臃肿不堪。.gitlab-ci.yml 中提供了 before_script 和 after_script 两个全局配置项。这两个配置项在所有 Job 的 script 执行前和执行后调用。</li>
+</ul>
+<p><img src="/img/gitlab-ci-cd.jpeg" alt="image"></p>
+<h3 id="gitlab-runner">GitLab Runner</h3>
+<p>用来执行.gitlab-ci.yml 脚本的工具。可以理解成，Runner就像认真工作的工人，GitLab-CI就是管理工人的中心，所有工人都要在GitLab-CI里面注册，并且表明自己是为哪个项目服务。当相应的项目发生变化时，GitLab-CI就会通知相应的工人执行对应的脚本。</p>
+<blockquote>
+<p><strong>Runner类型</strong></p>
+<ul>
+<li>Shared Runner：所有工程共用，由系统管理员创建。</li>
+<li>Specific Runer：特定项目使用</li>
+</ul>
+</blockquote>
+<p><strong>安装</strong><br>
+V10 以后的版本的安装包为gitlab-runner<br>
+老版本的为gitlab-ci-multi-runner</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">rpm -ivh gitlab-runner-12.9.0-1.x86_64.rpm
+</code></pre></div><p><strong>注册Token</strong><br>
+安装好Runner后，需要向Gitlab注册，在Gitlab获取token。执行</p>
+<pre><code>gitlab-runner register      # 新版本命令
+gitlab-ci-multi-runner register  # 老版本命令
+</code></pre><p>根据提示输入url和token，描述，tag，executor。<br>
+注册完成后在 setting-&gt;CI/CD 页面会新增一条runner记录。可以进入修改配置，包括注册时输入的tag，和是否触发untag的代码</p>
+<h3 id="gitlab-ciyml">.gitlab-ci.yml</h3>
+<p>.gitlab-ci.yml中可根据需要自定义执行代码走查、构建、打包、部署、测试等工作。</p>
+<p>.gitlab-ci.yml 参数列表</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>是否必须</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>script</td>
+<td>yes</td>
+<td>由Runner执行的shell脚本或命令</td>
+</tr>
+<tr>
+<td>image</td>
+<td>no</td>
+<td>使用的docker镜像</td>
+</tr>
+<tr>
+<td>services</td>
+<td>no</td>
+<td>使用的docker服务镜像</td>
+</tr>
+<tr>
+<td>before_script</td>
+<td>no</td>
+<td>在作业之前执行的脚本或命令</td>
+</tr>
+<tr>
+<td>after_script</td>
+<td>no</td>
+<td>在作业之后执行的脚本或命令</td>
+</tr>
+<tr>
+<td>stages</td>
+<td>no</td>
+<td>一个pipeline的各个阶段</td>
+</tr>
+<tr>
+<td>stage</td>
+<td>no</td>
+<td>一个job阶段，默认是test</td>
+</tr>
+<tr>
+<td>only</td>
+<td>no</td>
+<td>限制job什么时候执行</td>
+</tr>
+<tr>
+<td>except</td>
+<td>no</td>
+<td>限制job什么时候不执行</td>
+</tr>
+<tr>
+<td>rules</td>
+<td>no</td>
+<td>指定条件列表去确定一个job的可选属性以及是否执行该job。不可与only/except一起使用</td>
+</tr>
+<tr>
+<td>tags</td>
+<td>no</td>
+<td>指定job适用的runner，tags为runner标签</td>
+</tr>
+<tr>
+<td>allow_failure</td>
+<td>no</td>
+<td>允许job失败，如果失败将不会改变提交状态</td>
+</tr>
+<tr>
+<td>when</td>
+<td>no</td>
+<td>指定job什么时候执行，可以是on_success、on_failure、always和manual</td>
+</tr>
+<tr>
+<td>environment</td>
+<td>no</td>
+<td>指定job部署的环境名称</td>
+</tr>
+<tr>
+<td>cache</td>
+<td>no</td>
+<td>在后续运行之间应该缓存的文件列表</td>
+</tr>
+<tr>
+<td>artifacts</td>
+<td>no</td>
+<td>要附加到一个job上的文件和目录列表</td>
+</tr>
+<tr>
+<td>dependencies</td>
+<td>no</td>
+<td>通过提供要从中获取artifacts的job列表来限制将哪些artifacts传递给特定的job</td>
+</tr>
+<tr>
+<td>coverage</td>
+<td>no</td>
+<td>设置一个给定job的代码覆盖率</td>
+</tr>
+<tr>
+<td>retry</td>
+<td>no</td>
+<td>job失败后的自动重试次数</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>no</td>
+<td>设置优先于项目范围的job超时时间</td>
+</tr>
+<tr>
+<td>parallel</td>
+<td>no</td>
+<td>一个job并行运行的实例数量</td>
+</tr>
+<tr>
+<td>trigger</td>
+<td>no</td>
+<td>定义下游pipeline的触发器</td>
+</tr>
+<tr>
+<td>include</td>
+<td>no</td>
+<td>允许该job包含外部YAML文件</td>
+</tr>
+<tr>
+<td>extends</td>
+<td>no</td>
+<td>一个job将继承的配置项</td>
+</tr>
+<tr>
+<td>pages</td>
+<td>no</td>
+<td>上传job的结果与GitLab Pages一起使用</td>
+</tr>
+<tr>
+<td>variables</td>
+<td>no</td>
+<td>在job级别上定义变量</td>
+</tr>
+<tr>
+<td>interruptible</td>
+<td>no</td>
+<td>定义一个job在因为新的运行而变得多余时是否可以取消</td>
+</tr>
+</tbody>
+</table>
+<h3 id="配置示例">配置示例</h3>
+<p>示例1：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">stages</span>:
+  - <span style="color:#ae81ff">pull_code_test</span>
+  - <span style="color:#ae81ff">pull_code_production</span>
+  - <span style="color:#ae81ff">install_deps</span>
+  - <span style="color:#ae81ff">test</span>
+  - <span style="color:#ae81ff">build</span>
+  - <span style="color:#ae81ff">deploy_test</span>
+  - <span style="color:#ae81ff">deploy_production</span>
+  
+<span style="color:#f92672">variables</span>:
+  <span style="color:#f92672">PHP_FPM_CONTAINER</span>: <span style="color:#ae81ff">lnmp-php-fpm</span>
+  <span style="color:#f92672">WORK_DIR</span>: <span style="color:#ae81ff">/usr/share/nginx/html/</span>
+  <span style="color:#f92672">PROJECT</span>: <span style="color:#ae81ff">laravel-demo</span>
+  <span style="color:#f92672">GIT_DIR</span>: <span style="color:#ae81ff">/mnt/lnmp-docker</span>
+  
+<span style="color:#75715e"># 拉取代码</span>
+<span style="color:#f92672">pull_code_test</span>:
+  <span style="color:#f92672">stage</span>: <span style="color:#ae81ff">pull_code_test</span>
+  <span style="color:#f92672">only</span>:
+    - <span style="color:#ae81ff">develop</span>
+  <span style="color:#f92672">script</span>:
+     - <span style="color:#ae81ff">cd ${GIT_DIR}/${PROJECT}</span>
+     - <span style="color:#ae81ff">git pull origin develop</span>
+     
+<span style="color:#f92672">pull_code_production</span>:
+  <span style="color:#f92672">stage</span>: <span style="color:#ae81ff">pull_code_production</span>
+  <span style="color:#f92672">only</span>:
+    - <span style="color:#ae81ff">master</span>
+  <span style="color:#f92672">script</span>:
+    - <span style="color:#ae81ff">cd ${GIT_DIR}/${PROJECT}</span>
+    - <span style="color:#ae81ff">git pull origin master</span>
+    
+<span style="color:#75715e"># 安装依赖</span>
+<span style="color:#f92672">install_deps</span>:
+  <span style="color:#f92672">stage</span>: <span style="color:#ae81ff">install_deps</span>
+  <span style="color:#f92672">script</span>:
+    - <span style="color:#ae81ff">docker exec -w ${WORK_DIR}/${PROJECT} ${PHP_FPM_CONTAINER} composer install</span>
+    
+<span style="color:#f92672">build</span>:
+  <span style="color:#f92672">stage</span>: <span style="color:#ae81ff">build</span>
+  <span style="color:#f92672">script</span>:
+    <span style="color:#75715e"># Run migrations</span>
+    - <span style="color:#ae81ff">docker exec -w ${WORK_DIR}/${PROJECT} ${PHP_FPM_CONTAINER} php artisan migrate</span>
+    <span style="color:#75715e"># Cache clearing</span>
+    - <span style="color:#ae81ff">docker exec -w ${WORK_DIR}/${PROJECT} ${PHP_FPM_CONTAINER} php artisan cache:clear</span>
+    <span style="color:#75715e"># Create a cache file for faster configuration loading</span>
+    - <span style="color:#ae81ff">docker exec -w ${WORK_DIR}/${PROJECT} ${PHP_FPM_CONTAINER} php artisan config:cache</span>
+    <span style="color:#75715e"># Create a route cache file for faster route registration</span>
+    - <span style="color:#ae81ff">docker exec -w ${WORK_DIR}/${PROJECT} ${PHP_FPM_CONTAINER} php artisan route:clear</span>
+    
+<span style="color:#f92672">deploy_test</span>:
+  <span style="color:#f92672">stage</span>: <span style="color:#ae81ff">deploy_test</span>
+  <span style="color:#f92672">script</span>:
+    - <span style="color:#ae81ff">cd ${GIT_DIR}</span>
+    - <span style="color:#ae81ff">docker-compose down &amp;&amp; docker-compose build &amp;&amp; docker-compose up -d</span>
+    
+<span style="color:#f92672">deploy_production</span>:
+  <span style="color:#f92672">stage</span>: <span style="color:#ae81ff">deploy_production</span>
+  <span style="color:#f92672">script</span>:
+    - <span style="color:#ae81ff">cd ${GIT_DIR}</span>
+    - <span style="color:#ae81ff">docker-compose restart</span>
+</code></pre></div><p>示例2：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#75715e"># general settings for all</span>
+<span style="color:#f92672">.general</span>: <span style="color:#75715e">&amp;general</span>
+  <span style="color:#f92672">stage</span>: <span style="color:#ae81ff">deploy    </span> <span style="color:#75715e">#定义构建场景为部署，1.init初始化、2.lint代码规范、3.unit_test单元测试、4.build构建、5.deploy部署，若其中任务一个步骤出错，都不会到部署</span>
+  <span style="color:#f92672">only</span>:
+    - <span style="color:#ae81ff">hotfix/hotfix-conference     </span> <span style="color:#75715e">#指定分支名为紧急修bug，master主开发分支、feature新功能分支、release发布分支、hotfix紧急修bug分支</span>
+  <span style="color:#f92672">when</span>: <span style="color:#ae81ff">manual  </span> <span style="color:#75715e">#触发条件为手工执行</span>
+  <span style="color:#f92672">tags</span>:
+    - <span style="color:#ae81ff">cloud        </span> <span style="color:#75715e">#指定在哪个ci runner工作，云</span>
+  <span style="color:#f92672">image</span>: <span style="color:#ae81ff">ip:30050/builder/maven:v1-alpine     </span> <span style="color:#75715e">#青云maven容器</span>
+  <span style="color:#f92672">script</span>:
+    - <span style="color:#ae81ff">echo &#34;current branch ****** $CI_COMMIT_REF_NAME ******&#34;</span>
+    - <span style="color:#ae81ff">echo &#34;deploy start ...&#34;</span>
+ 
+    - <span style="color:#ae81ff">/share/script/deploy.sh $CI_JOB_NAME    </span> <span style="color:#75715e">#执行脚本，此脚本路径是被映射至gitlab runner容器内的路径，参数为CI_JOB_NAME变量</span>
+     
+    - <span style="color:#ae81ff">echo &#34;deploy done.&#34;</span>
+ 
+<span style="color:#75715e"># general settings for dev</span>
+<span style="color:#f92672">.dev</span>: <span style="color:#75715e">&amp;dev</span>        <span style="color:#75715e">#开发环境</span>
+  <span style="color:#f92672">&lt;&lt;</span>: <span style="color:#75715e">*general</span>    <span style="color:#75715e">#继承general定义的变量，若重新定义将被覆盖</span>
+  <span style="color:#f92672">tags</span>:
+    - <span style="color:#ae81ff">local    </span> <span style="color:#75715e">#本地</span>
+  <span style="color:#f92672">image</span>: <span style="color:#ae81ff">ip:30050/builder/maven:v1-alpine  </span> <span style="color:#75715e">#本地maven容器</span>
+ 
+ 
+<span style="color:#75715e"># golive deploy setting</span>
+<span style="color:#f92672">.golive</span>: <span style="color:#75715e">&amp;golive</span>  
+  <span style="color:#f92672">&lt;&lt;</span>: <span style="color:#75715e">*general</span>  <span style="color:#75715e">#继承general定义的变量，若再定义将被覆盖</span>
+  <span style="color:#f92672">only</span>:
+    - <span style="color:#ae81ff">master   </span> <span style="color:#75715e">#指定分支名</span>
+  <span style="color:#f92672">script</span>:
+    - <span style="color:#ae81ff">echo &#34;current branch ****** $CI_COMMIT_REF_NAME ******&#34;</span>
+    - <span style="color:#ae81ff">echo &#34;deploy golive start ...&#34;</span>
+ 
+    - <span style="color:#ae81ff">/share/script/golive/deploy.sh $CI_JOB_NAME</span>
+     
+    - <span style="color:#ae81ff">echo &#34;deploy golive done.&#34;</span>
+ 
+ 
+<span style="color:#75715e">#######定义hotfix/hotfix-conference 分支使用dev使用dev job的配置、test使用 general job的配置  </span>
+<span style="color:#75715e"># deploy discovery</span>
+<span style="color:#f92672">discovery - dev</span>: <span style="color:#75715e">*dev</span>
+<span style="color:#f92672">discovery - test</span>: <span style="color:#75715e">*general</span>
+ 
+<span style="color:#75715e"># deploy services</span>
+<span style="color:#f92672">services - dev</span>: <span style="color:#75715e">*dev</span>
+<span style="color:#f92672">services - test</span>: <span style="color:#75715e">*general</span>
+ 
+<span style="color:#75715e">######定义仅master分支使用golive job定义的配置</span>
+<span style="color:#f92672">backend - staging - node1</span>: <span style="color:#75715e">*golive</span>
+<span style="color:#f92672">backend - staging - node2</span>: <span style="color:#75715e">*golive</span>
+ 
+<span style="color:#f92672">backend - prod - node1</span>: <span style="color:#75715e">*golive</span>  
+<span style="color:#f92672">backend - prod - node2</span>: <span style="color:#75715e">*golive</span>
+</code></pre></div><h2 id="常用参数">常用参数</h2>
+<h3 id="environment">environment</h3>
+<p>用于定义job部署到特殊的环境中。如果指定了environment，并且没有该名下的环境则会自动创建</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">enviroment</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">uat</span>
+  <span style="color:#f92672">url</span>: <span style="color:#ae81ff">https://test.com</span> <span style="color:#75715e"># 如果job成功会在environment/deployment页面中创建一个合并请求按钮指向该地址</span>
+</code></pre></div><h3 id="artifacts">artifacts</h3>
+<p>用于指定成功后生成物（构建物）。只能使用项目工作目录下的文件或目录路径。job成功后会将artifacts发送到GitLab，可在页面UI中下载</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">artifacts</span>:  <span style="color:#75715e"># 生成构建物，可供其它Job使用，同时可在GitLab页面对应管道流程下载</span>
+    <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;$CI_JOB_NAME&#34;</span>
+    <span style="color:#75715e">#untracked: true # 传递所有git没有追踪的文件</span>
+    <span style="color:#f92672">expire_in</span>: <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">week</span>
+    <span style="color:#f92672">paths</span>:  <span style="color:#75715e"># 只能使用项目工作目录下文件或路径</span>
+      - <span style="color:#ae81ff">dlqs/dlqs.war</span>
+      - <span style="color:#ae81ff">changelog.txt</span>
+      - <span style="color:#ae81ff">dlqs/deploy.sh</span>
+</code></pre></div><h3 id="image和services">image和services</h3>
+<p>image：所要使用的docker镜像<br>
+services：所要使用的dockers服务</p>
+<h3 id="only">only</h3>
+<p>默认是or的关系</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">only</span>: <span style="color:#75715e"># 有一个条件满足就会触发</span>
+  - <span style="color:#ae81ff">master</span>
+  - <span style="color:#ae81ff">merge_requests</span>
+</code></pre></div><h3 id="pages">pages</h3>
+<p>管道触发会执行pages的自动部署，将我们的页面发布到GitLab Pages服务中。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">pages</span>:
+  <span style="color:#f92672">cache</span>:
+    <span style="color:#f92672">paths</span>:
+    - <span style="color:#ae81ff">node_modules/</span>
+
+  <span style="color:#f92672">script</span>:
+  - <span style="color:#ae81ff">cp -r docs/. .public</span>
+  
+  <span style="color:#f92672">artifacts</span>:
+    <span style="color:#f92672">paths</span>:
+    - <span style="color:#ae81ff">public</span>
+  
+  <span style="color:#f92672">only</span>:
+  - <span style="color:#ae81ff">master</span>
+</code></pre></div><hr>
+<blockquote>
+<p>edited by Shuzheng</p>
+</blockquote>
+<h2 id="应用实例">应用实例</h2>
+<h3 id="安装-git">安装 git</h3>
+<p>yum -y install git (针对el7系统会自带git 1.8.3符合lfs插件版本)
+在/etc/profile中配置环境变量（示例）：
+export PATH=/usr/libexec/bin:$PATH</p>
+<p>rpm –ivh  lfs的rpm包。</p>
+<h3 id="安装构建工具">安装构建工具</h3>
+<p>安装jdk：<br>
+手动上传jdk的安装包到/usr/local目录下，解压即可
+在/etc/profile中配置环境变量（示例）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export JAVA_HOME<span style="color:#f92672">=</span>/usr/local/jdk1.8.0_162
+export CLASSPATH<span style="color:#f92672">=</span>.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export PATH<span style="color:#f92672">=</span>$PATH:$JAVA_HOME/bin
+</code></pre></div><p>手动上传ant的安装包到/usr目录下，解压即可。然后在/etc/profile中配置环境变量（示例）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export ANT_HOME<span style="color:#f92672">=</span>/usr/apache-ant-1.9.10
+export PATH<span style="color:#f92672">=</span>$PATH:$ANT_HOME/bin
+</code></pre></div><h3 id="安装gitlab-runner">安装gitlab-runner</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">rpm -ivh gitlab-runner的安装包
+</code></pre></div><p>此时会自动新建一个gitlab-runner用户，在/home/gitlab-runner</p>
+<p>注册runner：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gitlab-runner register <span style="color:#75715e"># root用户执行</span>
+第一步输入项目的http地址
+第二步输入项目的token
+<span style="color:#75715e"># 以上两个可在项目的setting-&gt;ci/cd-&gt;runner中找到，要用权限较高的gitlab用户去查看，如：root</span>
+第三步输入runner描述信息（随便写什么，建议写项目名）
+第四步输入runner的标签名（随便写什么，建议写项目名）
+第五步输入runner根据哪种命令执行（一般选shell）
+正常此时runner会锁定到该项目并自动运行。
+</code></pre></div><h3 id="gitlab-ciyml-配置">.gitlab-ci.yml 配置</h3>
+<p>在项目的根目录添加.gitlab-ci.yml文件:
+此时项目中有任何提交都会触ci功能。可在.gitlab-ci.yml文件中编辑对应的命令，runner会去逐条执行。项目会拉取到/home/gitlab-runner/builds/下对应的runner名称命名的目录中。</p>
+<h3 id="配置互信可选">配置互信（可选）</h3>
+<p>在gitlab-runner用户中执行<code>ssh-keygen –t rsa</code> 命令
+然后将id_rsa.pub中的内容复制到想要互信的服务器的用户中的authorized_keys中。（可通过ssh 用户名@服务器ip 命令去尝试是否互信成功）<br>
+-scp war包的路径/war包名称.war 目标服务用户名@目标服务器ip地址:想传到的目录路径</p>
+<p>ssh -t -t 用户名@ip地址 执行解压和部署命令，命令需写在“”中，用；区分（解压命令也可以在33机器上执行，然后把目录直接传到61机器里面）。</p>
+<h3 id="常见问题">常见问题</h3>
+<p><strong>互信过程中可能出现的问题</strong>：<br>
+如果gitlab-runner用户进行了互信操作之后还是无法免密登录到其他服务器的普通用户，此时注意查看下需要登录的用户各级权限，用户目录-700 .ssh目录-700 authorized_keys-600.</p>
+<p><strong>jsp无法同步的问题</strong>：<br>
+<code>cd /cib/domains/appdomain/servers/test/tmp/_WL_user/deploy/wlu333/jsp_servlet/_views/ ; rm -rf _jsp/</code>删除jsp页面的缓存，来达到同步<br>
+上述命令也可以不用cd到指定目录并且直接指定目录。具体目录看对应的服务器。</p>
+<p><strong>拉取问题</strong>：
+需要用对应项目成员的用户登录去触发ci功能（目前只有开发人员可触发执行拉取代码，不在项目内或者维护者用户无法拉取）。
+root用户如果不在项目中执行会报错。</p>
+<p><strong>jdk版本问题</strong>：
+runner默认用root用户的jdk去启动服务器，在编译的时候如果遇到jar包问题，则切换到runner用户修改java_home,且在对应的jdk中jre-lib-ext中添加servelt-api的jar包。</p>
+<p><strong>runner安装包问题</strong>：
+需要和jdk的版本相匹配，el7的rpm包和el6的jdk可以注册成功但是runner是灰色无法运行（用root用户注册也不行）。
+正常安装成功如果gitlab-runner用户注册仍无法运行，可以用root用户去注册runner。</p>
+<p><strong>runner状态stuck问题</strong>：
+可能会出现runner脱机的问题，可在runner总页面将项目从runner上剔除，再重新添加。</p>
+<p><strong>增量</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd ../   <span style="color:#75715e"># 到项目代码的目录</span>
+git checkout master 
+git diff  HEAD^  --name-only | xargs  tar -zcvf diff.tar.gz
+tar -zxvf diff.tar.gz
+
+git diff HEAD^ --name-only &gt; 任意路径/changelog.txt
+</code></pre></div><p><strong>Sonar-scanner 代码扫描</strong>
+将安装包解压
+配置：<br>
+<code>/usr/local/sonar-scanner-4.2.0.1873-linux/conf/sonar-scanner.properties</code></p>
+<pre><code>sonar.sourceEncoding=UTF-8
+sonar.host.url=http://10.7.65.33:9000
+sonar.jdbc.username=sonar
+sonar.jdbc.password=sonar
+sonar.jdbc.url=jdbc:postgresql://10.7.65.33/sonar
+sonar.login=admin
+sonar.password=admin
+</code></pre><p>在/etc/profile 中配置对应的环境变量(示例)：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export SONARSCANNER_HOME<span style="color:#f92672">=</span>/usr/local/sonar-scanner-4.2.0.1873-linux/
+export PATH<span style="color:#f92672">=</span>$PATH:$SONARSCANNER_HOME/bin
+</code></pre></div>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/scm/" rel="tag">SCM</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/devops/" rel="tag">DevOps</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/2019/gitqa/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;上一篇</span>
+			<p class="pager__title">Git 常见问题</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/post/2019/traivs/" rel="next">
+			<span class="pager__subtitle">下一篇&thinsp;»</span>
+			<p class="pager__title">Traivs</p>
+		</a>
+	</div>
+</nav>
+
+
+
+
+<span id="/post/2019/gitlab-ci-cd/" class="leancloud_visitors" data-flag-title="GitLab CI/CD">
+  <span class="post-meta-item-text">文章阅读量 </span>
+  <span class="leancloud-visitors-count">1000000</span>
+  <p></p>
+</span>
+<div id="vcomments"></div>
+<script src="/js/av-min.js"></script>
+<script src='/js/Valine.min.js'></script>
+<script type="text/javascript">
+  new Valine({
+      el: '#vcomments' ,
+      appId: 'hm00s9gYQcAIYl6rSms3LDLr-gzGzoHsz',
+      appKey: '3cVVttFY1Pw0o7D9kv4cgDPm',
+      notify: 'false', 
+      verify: 'false', 
+      avatar:'CF', 
+      placeholder: '说点什么吧...',
+      visitor: 'true'
+  });
+</script>
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 CF.
+			<span class="footer__copyright-credits"> <a href="http://www.beian.miit.gov.cn">沪ICP备20014789号-1 </a> </span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

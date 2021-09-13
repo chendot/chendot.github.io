@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Git LFS - </title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Git LFS（large filesystem）是Github开发的一个Git扩展，用于实现Git对大文件的支持。GitLab也支持LFS扩展。git对文本类文件能提供很好的维护支持，但是一些二进制文件，如office文件、图片等，无法被git的diff、delta很好的追踪。LFS 用于针对管理此类非文本类文件。
+">
+		<meta property="og:title" content="Git LFS" />
+<meta property="og:description" content="Git LFS（large filesystem）是Github开发的一个Git扩展，用于实现Git对大文件的支持。GitLab也支持LFS扩展。git对文本类文件能提供很好的维护支持，但是一些二进制文件，如office文件、图片等，无法被git的diff、delta很好的追踪。LFS 用于针对管理此类非文本类文件。
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2019/git_lfs/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-12-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-12-22T00:00:00+00:00" />
+
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<header class="header">
+	<div class="container header__container">
+		
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/" title="Page(/post/2019/git_lfs.md)" rel="home">
+				<span class="menu__text">时光荏苒</span>
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/contact/">
+				
+				<span class="menu__text">有缘相聚</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/my-paint/">
+				
+				<span class="menu__text">解忧涂鸦</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+	<div class="container container--outer">
+		
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Git LFS</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-12-22T00:00:00Z">2019-12-22</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" rel="category">技术文档</a>
+	</span>
+</div></div>
+		</header><div class="content post__content clearfix">
+			<h3 id="本地安装lfs扩展">本地安装LFS扩展</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum install git-lfs
+</code></pre></div><blockquote>
+<p>注意：安装Git LFS的Git版本不低于1.8.2，高版本的git自带lfs不用额外安装</p>
+</blockquote>
+<p><strong>针对某个项目进行git lfs install</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 在某个Git仓库下</span>
+$ git lfs install
+Updated pre-push hook.
+Git LFS initialized.
+</code></pre></div><p>这个命令会安装pre-push的git hook，即在push之前会调用一些hook执行推送large file的操作。</p>
+<h3 id="指定lfs文件">指定LFS文件</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># track后缀为doc、docx的文件</span>
+git lfs track <span style="color:#e6db74">&#34;*.doc&#34;</span>  
+git lfs track <span style="color:#e6db74">&#34;*.docx&#34;</span>
+</code></pre></div><p>执行后仓库中会生成一个.gitattribute文件，git的勾子就是根据这个文件来判断当前仓库是否有使用LFS管理。</p>
+<p>完成后和往常一样提交文件即可：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 将large File添加到项目中</span>
+git add .
+
+<span style="color:#75715e"># 将文件的metadata写入</span>
+git commit -m <span style="color:#e6db74">&#34;Add gemfield docx file&#34;</span>
+
+<span style="color:#75715e"># 将git repo和large file同步到gitlab server上</span>
+git push origin master
+</code></pre></div><h3 id="remote最新的lfs">remote最新的LFS</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git lfs fetch origin master
+</code></pre></div><h3 id="文件加锁">文件加锁</h3>
+<p>因为git lfs管理的是二进制文件，并不擅长解决merge之类的问题，因此它有一个特殊的概念：文件加锁（gitlab 10.5后支持）。操作流程如下：</p>
+<ul>
+<li>先配置哪些文件是可以加锁的，语法和.gitignore类似</li>
+<li>如果要准备修改一个文件了，先对这个文件加锁</li>
+<li>修改完后push，然后解锁该文件</li>
+</ul>
+<h3 id="历史文件问题">历史文件问题</h3>
+<p>新增LFS配置无法影响历史的提交记录，对于已经很庞大的仓库而言，直接这么做起不到瘦身的效果，可行的做法是重建一个仓库，把各个分支最新的快照同步过来。<br>
+新版本使用git lfs migrate命令。</p>
+<h3 id="常用命令">常用命令</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git lfs help <span style="color:#75715e"># 查看git lfs的帮助</span>
+git lfs version <span style="color:#75715e"># 查看git lfs的版本号</span>
+git lfs track <span style="color:#75715e"># 查看git lfs的文件追踪信息</span>
+git lfs track <span style="color:#e6db74">&#39;*.dll&#39;</span> <span style="color:#75715e"># dll文件用lfs来管理，会在根目录的.gitattributes文件中添加：*.dll filter=lfs diff=lfs merge=lfs -text</span>
+git lfs track <span style="color:#e6db74">&#34;*.a&#34;</span> <span style="color:#e6db74">&#34;*.dylib&#34;</span> <span style="color:#e6db74">&#34;*.so&#34;</span> <span style="color:#e6db74">&#34;*.lib&#34;</span> <span style="color:#e6db74">&#34;*.dll&#34;</span>  <span style="color:#75715e"># a、dylib、so、lib、dll文件用lfs来管理，会在根目录的.gitattributes文件中添加</span>
+git lfs track <span style="color:#e6db74">&#39;Guid.upk&#39;</span> <span style="color:#75715e"># Guid.upk文件用lfs来管理，会在根目录的.gitattributes文件中添加：Guid.upk filter=lfs diff=lfs merge=lfs -text</span>
+git lfs track <span style="color:#e6db74">&#39;maps/*&#39;</span> <span style="color:#75715e"># 根目录下maps文件夹中的所有文件用lfs来管理，会在根目录的.gitattributes文件中添加：maps/* filter=lfs diff=lfs merge=lfs -text</span>
+git lfs untrack <span style="color:#e6db74">&#39;Guid.upk&#39;</span> <span style="color:#75715e"># Guid.upk文件不再使用lfs来管理</span>
+git lfs status  <span style="color:#75715e"># 查看当前git lfs对象的状态</span>
+git lfs ls-files  <span style="color:#75715e"># 查看当前哪些文件是使用lfs管理的</span>
+git lfs clone https://github.com/kekec/Test.git <span style="color:#75715e"># 克隆包含Git LFS的远程仓库到本地</span>
+git lfs env  <span style="color:#75715e"># 查看环境信息</span>
+</code></pre></div>
+		</div>
+	</article>
+</main>
+
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/2019/traivs/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;上一篇</span>
+			<p class="pager__title">Traivs</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/post/2020/0123-time/" rel="next">
+			<span class="pager__subtitle">下一篇&thinsp;»</span>
+			<p class="pager__title">时间的秩序</p>
+		</a>
+	</div>
+</nav>
+
+
+
+
+<span id="/post/2019/git_lfs/" class="leancloud_visitors" data-flag-title="Git LFS">
+  <span class="post-meta-item-text">文章阅读量 </span>
+  <span class="leancloud-visitors-count">1000000</span>
+  <p></p>
+</span>
+<div id="vcomments"></div>
+<script src="/js/av-min.js"></script>
+<script src='/js/Valine.min.js'></script>
+<script type="text/javascript">
+  new Valine({
+      el: '#vcomments' ,
+      appId: 'hm00s9gYQcAIYl6rSms3LDLr-gzGzoHsz',
+      appKey: '3cVVttFY1Pw0o7D9kv4cgDPm',
+      notify: 'false', 
+      verify: 'false', 
+      avatar:'CF', 
+      placeholder: '说点什么吧...',
+      visitor: 'true'
+  });
+</script>
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="搜索..." value="" name="q" aria-label="搜索...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">近期文章</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/2020/0825-gaokao/">又是一年高考季</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/2020/0822-1917/">1917 观感</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/2020/0723-yxhh/">野性的呼唤</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/2020/0623-frontend/">前端技术栈！</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/2020/0620-html/">CSS七宗罪</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">分类</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/it/">IT</a>
+			</li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/">技术文档</a>
+			</li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BB%98%E7%94%BB/">绘画</a>
+			</li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AC%E8%BD%BD/">转载</a>
+			</li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%87%91%E8%9E%8D/">金融</a>
+			</li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">标签</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/devops/" title="DevOps">DevOps</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/git/" title="Git">Git</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hugo/" title="Hugo">Hugo</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/it/" title="IT">IT</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scm/" title="SCM">SCM</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web/" title="web">web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%BB/" title="画">画</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BD%AC%E8%BD%BD/" title="转载">转载</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 CF.
+			<span class="footer__copyright-credits"> <a href="http://www.beian.miit.gov.cn">沪ICP备20014789号-1 </a> </span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

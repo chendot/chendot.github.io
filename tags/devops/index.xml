@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DevOps on </title>
+    <link>/tags/devops/</link>
+    <description>Recent content in DevOps on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 06 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="/tags/devops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Traivs</title>
+      <link>/post/2019/traivs/</link>
+      <pubDate>Fri, 06 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/traivs/</guid>
+      <description>Anyway, Travis is one of the favorite bands I love. I like the song Walking in the sun.
+Travis CI 的钩子与生命周期 Travis的钩子 Travis 有不同的阶段,他提供了7个钩子。
+ before_install：install 阶段之前执行 before_script：script 阶段之前执行 after_failure：script 阶段失败时执行 after_success：script 阶段成功时执行 before_deploy：deploy 步骤之前执行 after_deploy：deploy 步骤之后执行 after_script：script 阶段之后执行  生命周期  before_install install before_script script aftersuccess or afterfailure [OPTIONAL] before_deploy [OPTIONAL] deploy [OPTIONAL] after_deploy after_script  </description>
+    </item>
+    
+    <item>
+      <title>GitLab CI/CD</title>
+      <link>/post/2019/gitlab-ci-cd/</link>
+      <pubDate>Wed, 06 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/gitlab-ci-cd/</guid>
+      <description>本地开发（developing）&amp;ndash;》静态代码走查（linting）&amp;ndash;》单元测试（testing）&amp;ndash;》合并到主干（merging）&amp;ndash;》自动构建（building）&amp;ndash;》自动发布（publishing）
+相关概念  管道（pipeline）
+每个推送到 GitLab 的提交都会产生一个与该提交关联的管道，若一次推送包含了多个提交，则管道与最后那个提交相关联，管道就是一个分成不同阶段(stage)的作业(job)的集合。 阶段（stage）
+阶段是对批量作业的一个逻辑划分，每个 GitLab CI/CD 必须包含至少一个 Stage。多个 Stage 按照顺序执行，其中任何一个 Stage 失败，后续的 Stage 均不会被执行，整个CI过程被认为失败。 作业（job）
+Job被定义为顶级元素，并且至少包括一条script语句，如果一个 Job 没有显式地关联某个 Stage，则会被默认关联到 test Stage。随着项目越来越大，Job 越来越多，Job 中包含的重复逻辑可能会让配置文件臃肿不堪。.gitlab-ci.yml 中提供了 before_script 和 after_script 两个全局配置项。这两个配置项在所有 Job 的 script 执行前和执行后调用。  GitLab Runner 用来执行.gitlab-ci.yml 脚本的工具。可以理解成，Runner就像认真工作的工人，GitLab-CI就是管理工人的中心，所有工人都要在GitLab-CI里面注册，并且表明自己是为哪个项目服务。当相应的项目发生变化时，GitLab-CI就会通知相应的工人执行对应的脚本。
+ Runner类型
+ Shared Runner：所有工程共用，由系统管理员创建。 Specific Runer：特定项目使用   安装
+V10 以后的版本的安装包为gitlab-runner
+老版本的为gitlab-ci-multi-runner
+rpm -ivh gitlab-runner-12.9.0-1.x86_64.rpm 注册Token
+安装好Runner后，需要向Gitlab注册，在Gitlab获取token。执行
+gitlab-runner register # 新版本命令 gitlab-ci-multi-runner register # 老版本命令 根据提示输入url和token，描述，tag，executor。
+注册完成后在 setting-&amp;gt;CI/CD 页面会新增一条runner记录。可以进入修改配置，包括注册时输入的tag，和是否触发untag的代码</description>
+    </item>
+    
+  </channel>
+</rss>

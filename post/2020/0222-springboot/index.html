@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Spring Never End - </title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="小时候总是莫名的抵触java，不喜欢struts，spring。现在这个年纪看来，无知真可怕……学习些Spring">
+		<meta property="og:title" content="Spring Never End" />
+<meta property="og:description" content="小时候总是莫名的抵触java，不喜欢struts，spring。现在这个年纪看来，无知真可怕……学习些Spring" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2020/0222-springboot/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-02-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-02-22T00:00:00+00:00" />
+
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<header class="header">
+	<div class="container header__container">
+		
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/" title="Page(/post/2020/0222-springboot.md)" rel="home">
+				<span class="menu__text">时光荏苒</span>
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/contact/">
+				
+				<span class="menu__text">有缘相聚</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/my-paint/">
+				
+				<span class="menu__text">解忧涂鸦</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+	<div class="container container--outer">
+		
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Spring Never End</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-02-22T00:00:00Z">2020-02-22</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/it/" rel="category">IT</a>
+	</span>
+</div></div>
+		</header><div class="content post__content clearfix">
+			<h2 id="spring-iocinversion-of-control">Spring IoC(Inversion Of Control)</h2>
+<ul>
+<li><a href="https://www.zhihu.com/question/32108444/answer/309208647">DI(Dependency Injection)</a> 依赖注入，软件实体被动接受其依赖的其它组件被IoC容器注入</li>
+<li>DL(Dependency Lookup)    软件实体主动去服务注册地查找其依赖的服务</li>
+</ul>
+<p>Spring 框架最早是通过 XML 配置文件的形式来描述 bean 与 bean 之间的关系的，随着 Java 业界研发技术和理念的转变，基于 Java 代码和 Annotation 元信息的描述方式也日渐兴盛（比如 @Autowired 和 @Inject），但不管使用哪种方式，都只是为了简化绑定逻辑描述的各种“表象”，最终都是为本阶段的最终目的服务</p>
+<p>主要特性：</p>
+<ol>
+<li>非侵入式：基于Spring开发的应用中的对象可以不依赖于Spring的API</li>
+<li>控制反转：IOC——Inversion of Control，指的是将对象的创建权交给Spring去创建。使用Spring之前，对象的创建都是由我们自己在代码中new创建。而使用Spring之后。对象的创建都是由给了Spring框架。</li>
+<li>依赖注入：DI——Dependency Injection，是指依赖的对象不需要手动调用setXX方法去设置，而是通过配置赋值。</li>
+<li>面向切面编程：Aspect Oriented Programming——AOP。通过预编译方式和运行期动态代理实现程序功能的统一维护。主要功能：日志记录，性能统计，安全控制，事物处理，异常处理等。</li>
+<li>容器：Spring是一个容器，因为它包含并且管理应用对象的生命周期</li>
+<li>组件化：Spring实现了使用简单的组件配置组合成一个复杂的应用。在 Spring 中可以使用XML和Java注解组合这些对象。</li>
+<li>一站式：在IOC和AOP的基础上可以整合各种企业应用的开源框架和优秀的第三方类库（实际上Spring 自身也提供了表述层的SpringMVC和持久层的Spring JDBC）</li>
+</ol>
+<p><strong>核心思想：IOC和AOP</strong><br>
+Ioc控制反转，谁控制谁？控制什么？为什么要控制？
+DI依赖注入，谁依赖谁？为什么要依赖？谁注入谁？为什么要注入？</p>
+<p>AOP，基于动态代理，如果要代理对象，实现了某个接口，那么Spring AOP会使用JDK Proxy创建代理。AOP在日志记录和事务处理方面应用较多。</p>
+<h2 id="spring-mvc">Spring MVC</h2>
+<p>前后端解偶 @RestController</p>
+<p>参考文章：<br>
+<a href="https://www.zhihu.com/question/294282002/answer/521229241">Spring MVC过时了吗？</a></p>
+<h2 id="spring-boot">Spring Boot</h2>
+<p>习惯优于配置</p>
+<p>spring4.X提倡使用java配置和注解配置组合，而Spring Boot不需要任何xml配置</p>
+
+		</div>
+	</article>
+</main>
+
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/2020/0202-education/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;上一篇</span>
+			<p class="pager__title">教育的力量</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/post/2020/0307-draw/" rel="next">
+			<span class="pager__subtitle">下一篇&thinsp;»</span>
+			<p class="pager__title">撸只猫</p>
+		</a>
+	</div>
+</nav>
+
+
+
+
+<span id="/post/2020/0222-springboot/" class="leancloud_visitors" data-flag-title="Spring Never End">
+  <span class="post-meta-item-text">文章阅读量 </span>
+  <span class="leancloud-visitors-count">1000000</span>
+  <p></p>
+</span>
+<div id="vcomments"></div>
+<script src="/js/av-min.js"></script>
+<script src='/js/Valine.min.js'></script>
+<script type="text/javascript">
+  new Valine({
+      el: '#vcomments' ,
+      appId: 'hm00s9gYQcAIYl6rSms3LDLr-gzGzoHsz',
+      appKey: '3cVVttFY1Pw0o7D9kv4cgDPm',
+      notify: 'false', 
+      verify: 'false', 
+      avatar:'CF', 
+      placeholder: '说点什么吧...',
+      visitor: 'true'
+  });
+</script>
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 CF.
+			<span class="footer__copyright-credits"> <a href="http://www.beian.miit.gov.cn">沪ICP备20014789号-1 </a> </span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

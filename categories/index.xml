@@ -1,28 +1,60 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on CF 的个人博客</title>
+    <title>Categories on </title>
     <link>/categories/</link>
-    <description>Recent content in Categories on CF 的个人博客</description>
+    <description>Recent content in Categories on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 16 Apr 2018 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Sun, 30 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>随笔</title>
+      <link>/categories/%E9%9A%8F%E7%AC%94/</link>
+      <pubDate>Sun, 30 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/%E9%9A%8F%E7%AC%94/</guid>
+      <description></description>
+    </item>
     
     <item>
-      <title>Development</title>
-      <link>/categories/development/</link>
-      <pubDate>Mon, 16 Apr 2018 00:00:00 +0000</pubDate>
+      <title>技术文档</title>
+      <link>/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/</link>
+      <pubDate>Tue, 23 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>/categories/development/</guid>
+      <guid>/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>IT</title>
+      <link>/categories/it/</link>
+      <pubDate>Sat, 20 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/it/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>金融</title>
+      <link>/categories/%E9%87%91%E8%9E%8D/</link>
+      <pubDate>Tue, 17 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/%E9%87%91%E8%9E%8D/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>绘画</title>
+      <link>/categories/%E7%BB%98%E7%94%BB/</link>
+      <pubDate>Sat, 07 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/%E7%BB%98%E7%94%BB/</guid>
       <description></description>
     </item>
     
     <item>
       <title>转载</title>
       <link>/categories/%E8%BD%AC%E8%BD%BD/</link>
-      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 02 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/%E8%BD%AC%E8%BD%BD/</guid>
       <description></description>

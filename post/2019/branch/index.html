@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>分支管理 - </title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Git强大的分支、合并管理功能使得制定各类分支策略和工作流更加灵活。但是，许多组织最终采用的工作流要么没有明确定义，要么过于复杂，要么就是未能与问题追踪系统集成。许多从其他版本控制系统转向git的组织经常会发现很难开发出有效的工作流。本文介绍一些常用的Git分支管理策略，为具体项目中提供规范性的指导。">
+		<meta property="og:title" content="分支管理" />
+<meta property="og:description" content="Git强大的分支、合并管理功能使得制定各类分支策略和工作流更加灵活。但是，许多组织最终采用的工作流要么没有明确定义，要么过于复杂，要么就是未能与问题追踪系统集成。许多从其他版本控制系统转向git的组织经常会发现很难开发出有效的工作流。本文介绍一些常用的Git分支管理策略，为具体项目中提供规范性的指导。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2019/branch/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-08-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-08-15T00:00:00+00:00" />
+
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<header class="header">
+	<div class="container header__container">
+		
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/" title="Page(/post/2019/branch.md)" rel="home">
+				<span class="menu__text">时光荏苒</span>
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/contact/">
+				
+				<span class="menu__text">有缘相聚</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/my-paint/">
+				
+				<span class="menu__text">解忧涂鸦</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+	<div class="container container--outer">
+		
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">分支管理</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-08-15T00:00:00Z">2019-08-15</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" rel="category">技术文档</a>
+	</span>
+</div></div>
+		</header><div class="content post__content clearfix">
+			<h3 id="建议规范">建议规范</h3>
+<h4 id="git-flow">Git flow</h4>
+<p>Git flow是一个定义良好的标准，但其复杂性引入了两个问题。<br>
+一是开发人员必须使用开发分支而不是主干分支，主干分支是为要发布到生产的代码保留的。将master设置为您默认分支的名称是一种惯例，绝大多数的其他分支来源于此，并最终合并于此。由于大多数工具会自动使用master分支作为默认分支，因此老是切换到另一个分支是很烦人的。  <br>
+二是补丁和发布分支引入的复杂性。这些分支对于某些组织来说可能是一个好主意，但对绝大多数组织来说都是过度的。如今大多数组织都在实施持续交付，这意味着我们可以部署默认分支。这样就可以避免使用补丁和发布分支，包括他们引入的所有流程。</p>
+<p><img src="/img/git_flow.png" alt="image >" title="git flow"></p>
+<h4 id="github-flow">GitHub flow</h4>
+<p>此工作流仅具有特性分支和主干分支。非常简单和干净，许多组织已经采用它并取得了巨大的成功。 Atlassian建议采用类似的策略，尽管他们会修改功能分支。将所有内容合并到主干分支和部署通常意味着您最大限度地减少“库存”中的代码量，这与精益和持续交付最佳实践一致。但是这个流程仍然存在很多关于部署、环境、发布和issue集成的问题。</p>
+<p><img src="/img/github_flow.png#left" alt="image" title="github flow"></p>
+<h4 id="gitlab-flow">GitLab flow</h4>
+<h5 id="带生产分支">带生产分支</h5>
+<p><img src="/img/gitlab_flow1.png" alt="image"><br>
+GitHub Flow 确实假设您每次合并功能分支时都可以部署到生产环境。这对于SaaS应用程序是可行的，但在许多情况下这是不可能的。一种情况是您无法控制确切的发布时刻，例如需要通过AppStore验证的iOS应用程序。另一个例子是当你有部署窗口时（工作日从上午10点到下午4点，当运营团队满负荷运转时），你也可以在其他时间合并代码。在这些情况下，您可以创建一个反映已部署代码的生产分支。您可以通过将master合并到生产分支来部署新版本。如果您需要知道生产中的代码，您可以检出生产分支以查看。在版本控制系统中，合并提交很容易看到部署的大致时间。如果您自动部署生产分支，则此时间非常准确。如果您需要更准确的时间，则可以让部署脚本在每个部署上创建标记。此流程可避免git flow中常见的释放，标记和合并开销。</p>
+<h5 id="带环境分支">带环境分支</h5>
+<p><img src="/img/gitlab_flow2.png" alt="image"><br>
+拥有一个自动更新到主干分支的环境可能是个好主意。仅在这种情况下，此环境的名称可能与分支名称不同。假设您有一个临时环境，一个预生产环境和一个生产环境。在这种情况下，主干分支部署在临时环境上。当有人想要部署到预生产时，他们会创建从主干分支到预生产分支的合并请求。而将预生产分支合并到生产分支则会触发代码的上线。这种变更提交（commits）只向下游流动的工作流可确保所有变更在所有环境中都经过测试。如果您需要cherry-pick一个包含修补程序的提交，通常做法是在功能分支上开发它并使用合并请求将其合并到master中，不要删除该功能分支。如果主干分支自动测试通过（如果你正在实行持续交付，那么它就应如此），之后你就可以把它合并到其他分支。在某些情况下，可能需要执行更多的手工测试（这导致无法执行上述的主干-&gt;预生产-&gt;生产合并的标准流程），那么您可以从特性分支发送合并请求到下游分支。环境分支的“极端”版本正在为Teatro创建每个功能分支的环境。</p>
+<h5 id="带发布分支">带发布分支</h5>
+<p><img src="/img/gitlab_flow3.png" alt="image"><br>
+只有在您需要向外界发布软件时，才需要使用发布分支。在这种情况下，每个分支包含次要版本（2-3-stable，2-4-stable等）。 stable分支使用master作为起点，并尽可能晚地创建。通过尽可能晚地创建分支，您可以最大限度地减少将bug fixes应用于多个分支所花费的时间。在一个发布分支被公布后，仅有严重错误的修复能被包括在该分支中。如果可能的话，这些bug fixes应首先合并到master中，然后cherry-pick到发布分支中。这样你就不会忘记将它们cherry-pick到master中，以避免在后续版本中遇到相同的bug。这被称为“上游优先”策略，也是谷歌和红帽实施的策略。每次在发布分支中包含错误修复时，都会通过设置新标记来增加补丁的版本号（以符合语义版本控制）。有些项目还有一个稳定的分支，指向与最新发布的分支相同的提交。在此流程中，拥有生产分支（或git flow 的master分支）并不常见。</p>
+<h3 id="实践方案">实践方案</h3>
+<p>常设三个分支：</p>
+<ul>
+<li>dev：开发分支，开发人员日常使用，push和merge不受限制。</li>
+<li>master：测试环境的稳定分支，用于构建测试环境。push仅限于bug修改，merge需要审核。</li>
+<li>prod：生产稳定分支，用于同步生产版本。除了从master分支进行merge，不接受任何其它修改。</li>
+</ul>
+<p>平时开发工作中，根据需要由开发人员创建两类临时分支：</p>
+<ul>
+<li>feature-*：为了开发某个特定功能，从develop分支上面分出来的。开发完成后，要merge到develop分支。功能分支的命名，采用feature-*形式命名(*为任务单号)</li>
+<li>fixbug-*：Bug修复分支，为了修复某个bug，从常设分支上面分出来的，一般从生产稳定分支分出来。修复完成后，再merge到其他的分支。采用fixbug-*的形式命名（*为bug单号）</li>
+</ul>
+<p><img src="/img/sample-flow.png" alt="image"></p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/git/" rel="tag">Git</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/2019/git_commit/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;上一篇</span>
+			<p class="pager__title">代码提交</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/post/2019/gitqa/" rel="next">
+			<span class="pager__subtitle">下一篇&thinsp;»</span>
+			<p class="pager__title">Git 常见问题</p>
+		</a>
+	</div>
+</nav>
+
+
+
+
+<span id="/post/2019/branch/" class="leancloud_visitors" data-flag-title="分支管理">
+  <span class="post-meta-item-text">文章阅读量 </span>
+  <span class="leancloud-visitors-count">1000000</span>
+  <p></p>
+</span>
+<div id="vcomments"></div>
+<script src="/js/av-min.js"></script>
+<script src='/js/Valine.min.js'></script>
+<script type="text/javascript">
+  new Valine({
+      el: '#vcomments' ,
+      appId: 'hm00s9gYQcAIYl6rSms3LDLr-gzGzoHsz',
+      appKey: '3cVVttFY1Pw0o7D9kv4cgDPm',
+      notify: 'false', 
+      verify: 'false', 
+      avatar:'CF', 
+      placeholder: '说点什么吧...',
+      visitor: 'true'
+  });
+</script>
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 CF.
+			<span class="footer__copyright-credits"> <a href="http://www.beian.miit.gov.cn">沪ICP备20014789号-1 </a> </span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>
